@@ -72,7 +72,11 @@ function drawScale(ctx, radius, angle, width, length) {
 }
 
 function drawHourHand(ctx, date) {
-	var angle = (-2) * Math.PI * (date.getSeconds() + date.getMinutes() * 60 + (date.getHours() - 12) * 3600) / (3600 * 12);
+	var angle = (-2) * Math.PI *
+		(date.getSeconds() + date.getMinutes() * 60 +
+			(date.getHours() > 11 ? (date.getHours() - 12) : date.getHours()) * 3600
+		) /
+		(3600 * 12);
 	var endX = (radius - 50) * Math.sin(angle + Math.PI) + 200;
 	var endY = (radius - 50) * Math.cos(angle + Math.PI) + 200;
 
