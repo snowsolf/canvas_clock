@@ -4,7 +4,7 @@
  */
 
 /**
- * 钟表圆心坐标
+ * 默认钟表圆心坐标
  * @type {number}
  */
 var x = 105;
@@ -17,8 +17,10 @@ var radius = 90;
 var pi = Math.PI;
 window.onload = function() {
 	var canvas = document.getElementById('canvas');
-	canvas.height = 210;
-	canvas.width = 210;
+	canvas.width = document.body.clientWidth;
+	canvas.height = document.body.clientHeight;
+	x = document.body.clientWidth / 2;
+	y = document.body.clientHeight / 2;
 
 	var ctx = canvas.getContext("2d");
 	initCanvas(canvas, ctx);
@@ -42,7 +44,7 @@ window.onload = function() {
  */
 function initCanvas(canvas, ctx) {
 	ctx.fillStyle = "#FFFFFF";
-	ctx.fillRect(0, 0, canvas.width, canvas.height);
+	ctx.fillRect(canvas.width - x, canvas.height - y, x + canvas.width, y + canvas.height);
 	ctx.beginPath();
 	ctx.arc(x, y, radius, 0, 2 * pi, true);
 	ctx.shadowOffsetX = 5;
