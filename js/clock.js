@@ -3,6 +3,16 @@
  * Created by snowsolf(snowsolf@hotmail.com) on 2015/11/28.
  */
 
+/**
+ * 钟表圆心坐标
+ * @type {number}
+ */
+var x = 105;
+var y = 105;
+/**
+ * 钟表半径
+ * @type {number}
+ */
 var radius = 90;
 var pi = Math.PI;
 window.onload = function() {
@@ -25,11 +35,16 @@ window.onload = function() {
 	}, 50);
 };
 
+/**
+ * 初始化表盘，并设置表盘阴影，然后再把阴影去除。
+ * @param canvas
+ * @param ctx
+ */
 function initCanvas(canvas, ctx) {
 	ctx.fillStyle = "#FFFFFF";
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
 	ctx.beginPath();
-	ctx.arc(105, 105, radius, 0, 2 * pi, true);
+	ctx.arc(x, y, radius, 0, 2 * pi, true);
 	ctx.shadowOffsetX = 5;
 	ctx.shadowOffsetY = 5;
 	ctx.shadowBlur = 20;
@@ -42,20 +57,32 @@ function initCanvas(canvas, ctx) {
 	ctx.shadowColor = "#FFFFFF";
 }
 
+/**
+ * 清除表盘内上一个动画内容，保留表盘刻度值
+ * @param ctx
+ */
 function clearCanvasInside(ctx) {
 	ctx.beginPath();
-	ctx.arc(105, 105, radius - 19, 0, 2 * pi, true);
+	ctx.arc(x, y, radius - 19, 0, 2 * pi, true);
 	ctx.fillStyle = "#FFFFFF";
 	ctx.fill();
 }
 
+/**
+ * 表盘的中心点
+ * @param ctx
+ */
 function drawCenterDot(ctx) {
 	ctx.beginPath();
-	ctx.arc(105, 105, 4, 0, 2 * pi, true);
+	ctx.arc(x, y, 4, 0, 2 * pi, true);
 	ctx.fillStyle = "#000000";
 	ctx.fill();
 }
 
+/**
+ * 小时刻度
+ * @param ctx
+ */
 function drawHourScale(ctx) {
 	var hoursAngle = pi / 6;
 	for(var i = 0; i < (2 * pi); i += hoursAngle) {
@@ -63,6 +90,10 @@ function drawHourScale(ctx) {
 	}
 }
 
+/**
+ * 分钟刻度
+ * @param ctx
+ */
 function drawMinuteScale(ctx) {
 	var minuteAngle = pi / 30;
 	for(var i = 0; i < (2 * pi); i += minuteAngle) {
@@ -70,11 +101,19 @@ function drawMinuteScale(ctx) {
 	}
 }
 
+/**
+ * 刻度
+ * @param ctx
+ * @param radius
+ * @param angle		刻度距离0角度的角度值
+ * @param width		刻度宽度
+ * @param length	刻度长度
+ */
 function drawScale(ctx, radius, angle, width, length) {
-	var startX = (radius - length) * Math.sin(angle) + 105;
-	var startY = (radius - length) * Math.cos(angle) + 105;
-	var endX = radius * Math.sin(angle) + 105;
-	var endY = radius * Math.cos(angle) + 105;
+	var startX = (radius - length) * Math.sin(angle) + x;
+	var startY = (radius - length) * Math.cos(angle) + y;
+	var endX = radius * Math.sin(angle) + x;
+	var endY = radius * Math.cos(angle) + y;
 
 	ctx.beginPath();
 	ctx.moveTo(startX, startY);
@@ -85,42 +124,57 @@ function drawScale(ctx, radius, angle, width, length) {
 
 }
 
+/**
+ * 时针，以秒为单位
+ * @param ctx
+ * @param date
+ */
 function drawHourHand(ctx, date) {
 	var angle = (-2) * pi *
 		(date.getSeconds() + date.getMinutes() * 60 +
 			(date.getHours() > 11 ? (date.getHours() - 12) : date.getHours()) * 3600
 		) /	(3600 * 12);
-	var endX = (radius - 40) * Math.sin(angle + pi) + 105;
-	var endY = (radius - 40) * Math.cos(angle + pi) + 105;
+	var endX = (radius - 40) * Math.sin(angle + pi) + x;
+	var endY = (radius - 40) * Math.cos(angle + pi) + y;
 
 	ctx.beginPath();
-	ctx.moveTo(105, 105);
+	ctx.moveTo(x, y);
 	ctx.lineTo(endX, endY);
 	ctx.lineWidth = 6;
 	ctx.strokeStyle = "#000000";
 	ctx.stroke();
 }
 
+/**
+ * 分针，以秒为单位
+ * @param ctx
+ * @param date
+ */
 function drawMinuteHand(ctx, date) {
 	var angle = (-2) * pi * (date.getSeconds() + date.getMinutes() * 60) / 3600;
-	var endX = (radius - 30) * Math.sin(angle + pi) + 105;
-	var endY = (radius - 30) * Math.cos(angle + pi) + 105;
+	var endX = (radius - 30) * Math.sin(angle + pi) + x;
+	var endY = (radius - 30) * Math.cos(angle + pi) + y;
 
 	ctx.beginPath();
-	ctx.moveTo(105, 105);
+	ctx.moveTo(x, y);
 	ctx.lineTo(endX, endY);
 	ctx.lineWidth = 4;
 	ctx.strokeStyle = "#000000";
 	ctx.stroke();
 }
 
+/**
+ * 秒针，以毫秒为单位
+ * @param ctx
+ * @param date
+ */
 function drawSecondHand(ctx, date) {
 	var angle = (-2) * pi * (date.getSeconds() * 1000 + date.getMilliseconds()) / (60 * 1000);
-	var endX = (radius - 20) * Math.sin(angle + pi) + 105;
-	var endY = (radius - 20) * Math.cos(angle + pi) + 105;
+	var endX = (radius - 20) * Math.sin(angle + pi) + x;
+	var endY = (radius - 20) * Math.cos(angle + pi) + y;
 
 	ctx.beginPath();
-	ctx.moveTo(105, 105);
+	ctx.moveTo(x, y);
 	ctx.lineTo(endX, endY);
 	ctx.lineWidth = 2;
 	ctx.strokeStyle = "#000000";
