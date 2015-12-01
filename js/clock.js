@@ -13,7 +13,7 @@ var y = 105;
  * 钟表半径
  * @type {number}
  */
-var radius = 90;
+var radius = 190;
 var pi = Math.PI;
 window.onload = function() {
 	var canvas = document.getElementById('canvas');
