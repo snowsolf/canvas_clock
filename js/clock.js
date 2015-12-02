@@ -15,12 +15,24 @@ var y = 105;
  */
 var radius = 150;
 var pi = Math.PI;
+/**
+ * 显示浏览器窗口的高度和宽度：（不包括工具栏/滚动条）
+ * @type {Number|number}
+ */
+var w = window.innerWidth
+		|| document.documentElement.clientWidth
+		|| document.body.clientWidth;
+
+var h = window.innerHeight
+		|| document.documentElement.clientHeight
+		|| document.body.clientHeight;
+
 window.onload = function() {
 	var canvas = document.getElementById('canvas');
-	canvas.width = window.innerWidth;
-	canvas.height = window.innerHeight;
-	x = window.innerWidth / 2;
-	y = window.innerHeight / 2;
+	canvas.width = w;
+	canvas.height = h;
+	x = w / 2;
+	y = h / 2;
 
 	var ctx = canvas.getContext("2d");
 	initCanvas(canvas, ctx);
