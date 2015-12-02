@@ -17,10 +17,10 @@ var radius = 150;
 var pi = Math.PI;
 window.onload = function() {
 	var canvas = document.getElementById('canvas');
-	canvas.width = document.body.clientWidth;
-	canvas.height = document.body.clientHeight;
-	x = document.body.clientWidth / 2;
-	y = document.body.clientHeight / 2;
+	canvas.width = window.innerWidth;
+	canvas.height = window.innerHeight;
+	x = window.innerWidth / 2;
+	y = window.innerHeight / 2;
 
 	var ctx = canvas.getContext("2d");
 	initCanvas(canvas, ctx);
